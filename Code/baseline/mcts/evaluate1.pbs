@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH --job-name=mcts
+#SBATCH --nodes=1 --ntasks=10
+#SBATCH --mem=60GB
+#SBATCH --time=10:00:00
+#SBATCH --output=/users/PES0781/ziqichen/peptideproject/Code/RL/baseline/mcts/evaluate1.out
+#SBATCH --error=/users/PES0781/ziqichen/peptideproject/Code/RL/baseline/mcts/evaluate1.err
+#SBATCH --account=PCON0041
+cd /users/PES0781/ziqichen/peptideproject/Code/RL/baseline/mcts/
+python ./MCTS.py --alleles ./alleles.txt --out ./result.txt --num_rollout 10000 --max_len 15 --min_len 8 --prop_delta 0.5 --ncpu 10

@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name=test1
+#SBATCH --nodes=1 --ntasks=15
+#SBATCH --gpus=1
+#SBATCH --mem=50GB
+#SBATCH --time=10:00:00
+#SBATCH --output=/fs/scratch/PAS1440/Ziqi/peptide_RL/Experiments/9_2/test/test1.out
+#SBATCH --error=/fs/scratch/PAS1440/Ziqi/peptide_RL/Experiments/9_2/test/test1.err
+#SBATCH --account=PCON0041
+source ~/anaconda3/bin/activate mhcflurry
+cd /fs/scratch/PAS1440/Ziqi/peptide_RL/Experiments/9_2/test/
+python ~/peptideproject/Code/RL/src_v22/test_RL.py --num_envs 30 --sample_rate 0.0 --alleles ~/peptideproject/Code/RL/baseline/mcts/alleles.txt --out ./test1.result --rollout 1000 --path ../results1/class1_pseudosequences.csv_game_False_0.8_1.0_-0.9_-1.0_0_True_0.0_1.0_0_0.05_128_48_3_FC_48_40_20_0.01_0.9_10000000_0.05_1.0_0.01_5000_0.2_0.01_15_False_0.75_30_128_8_1_0.0/ppo_peptide.zip

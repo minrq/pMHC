@@ -1,0 +1,39 @@
+\begin{table}[!h]
+  \centering
+      \caption{{Experimental Setup for Peptide Generation}}
+  \label{tbl:setup}
+
+  \begin{threeparttable}
+%    \begin{small}
+      \begin{tabular}{
+	@{\hspace{2pt}}p{0.7\linewidth}@{\hspace{5pt}}
+	@{\hspace{2pt}}r@{\hspace{2pt}}      
+	}
+        \toprule
+        description & value\\
+        \midrule
+        maximum steps $T$       & 8 \\
+        presentation score threshold $\sigma$  & 0.75  \\
+        discount factor $\gamma$  & 0.9 \\
+        \midrule
+        hidden dimension of $W_2^m$ & 128 \\
+        latent dimension of $\overrightarrow{\hidden}_i/\overleftarrow{\hidden}_i/\hidden^m$ & 48 \\
+        hidden dimension of policy \& value networks & 40 \\
+        hidden layers of policy \& value networks & 2\\
+        \midrule
+        number of steps per iteration & 3,840 \\
+        entropy coefficient & 0.001  \\
+        batch size for policy update & 64 \\
+        number of epochs per iteration & 10 \\
+        clip range & 0.2 \\
+        learning rate & 3e-4 \\
+        \bottomrule
+      \end{tabular}
+%      \begin{tablenotes}
+%      \item 
+%      \par
+%      \end{tablenotes}
+%    \end{small}
+  \end{threeparttable}
+
+\end{table}
