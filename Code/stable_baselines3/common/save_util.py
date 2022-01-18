@@ -359,15 +359,22 @@ def load_from_pkl(path: Union[str, pathlib.Path, io.BufferedIOBase], verbose: in
 def load_from_zip_file(
     load_path: Union[str, pathlib.Path, io.BufferedIOBase],
     load_data: bool = True,
+    custom_objects: Optional[Dict[str, Any]] = None,
     device: Union[th.device, str] = "auto",
     verbose: int = 0,
 ) -> (Tuple[Optional[Dict[str, Any]], Optional[TensorDict], Optional[TensorDict]]):
+
     """
     Load model data from a .zip archive
-
     :param load_path: Where to load the model from
     :param load_data: Whether we should load and return data
         (class parameters). Mainly used by 'load_parameters' to only load model parameters (weights)
+    :param custom_objects: Dictionary of objects to replace
+        upon loading. If a variable is present in this dictionary as a
+        key, it will not be deserialized and the corresponding item
+        will be used instead. Similar to custom_objects in
+        ``keras.models.load_model``. Useful when you have an object in
+        file that can not be deserialized.
     :param device: Device on which the code should run.
     :return: Class parameters, model state_dicts (aka "params", dict of state_dict)
         and dict of pytorch variables
@@ -392,7 +399,7 @@ def load_from_zip_file(
                 # Load class parameters that are stored
                 # with either JSON or pickle (not PyTorch variables).
                 json_data = archive.read("data").decode()
-                data = json_to_data(json_data)
+                data = json_to_data(json_data, custom_objects=custom_objects)
 
             # Check for all .pth files and load them using th.load.
             # "pytorch_variables.pth" stores PyTorch variables, and any other .pth

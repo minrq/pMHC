@@ -393,7 +393,7 @@ class PeptideEnv(gym.Env):
         info['process_score'] = ",".join(["%.4f" % (score) for score in process_score])
         info['present_score'] = ",".join(["%.4f" % (score) for score in present_score])
         info['affinity'] = ",".join(["%.4f" % (score) for score in affinity])
-        info['difference'] = diff
+        #info['difference'] = diff
          
         if self.use_step:
             self.state[:, -1] = self.len_step

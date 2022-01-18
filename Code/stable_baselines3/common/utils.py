@@ -3,7 +3,7 @@ import os
 import random
 from collections import deque
 from itertools import zip_longest
-from typing import Iterable, Optional, Union
+from typing import Iterable, Optional, Union, Dict
 
 import gym
 import numpy as np
@@ -16,7 +16,24 @@ except ImportError:
     SummaryWriter = None
 
 from stable_baselines3.common import logger
-from stable_baselines3.common.type_aliases import GymEnv, Schedule
+from stable_baselines3.common.type_aliases import GymEnv, Schedule, TensorDict
+
+
+def obs_as_tensor(
+    obs: Union[np.ndarray, Dict[Union[str, int], np.ndarray]], device: th.device
+) -> Union[th.Tensor, TensorDict]:
+    """
+    Moves the observation to the given device.
+    :param obs:
+    :param device: PyTorch device
+    :return: PyTorch tensor of the observation on a desired device.
+    """
+    if isinstance(obs, np.ndarray):
+        return th.as_tensor(obs).to(device)
+    elif isinstance(obs, dict):
+        return {key: th.as_tensor(_obs).to(device) for (key, _obs) in obs.items()}
+    else:
+        raise Exception(f"Unrecognized type of observation {type(obs)}")
 
 
 def set_random_seed(seed: int, using_cuda: bool = False) -> None:

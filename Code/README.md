@@ -31,7 +31,7 @@ To accelerate the training, we ran multiple instances of peptide environment in 
 Test the trained model under the directory <code>model</code> with the command below:
 
 ```
-python ./src/test_RL.py --num_envs 30 --sample_rate 0.0 --alleles ./data/alleles.txt --out ./test1.result --rollout 1000 --path ./model/ppo_peptide.zip
+python ./src/test_RL.py --num_envs 30 --sample_rate 0.0 --alleles ./data/test_alleles.txt --out ./test1.result --rollout 1000 --path ./model/ppo_peptide.zip
 ```
 
 <code>sample_rate</code> : the percentage of initial peptides that are sampled from the dataset. For example, "sample_rate = 0.0" represents all the initial peptides are completely random generated.
