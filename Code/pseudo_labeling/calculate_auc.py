@@ -25,9 +25,11 @@ parser.add_argument('--data', type=str)
 args = parser.parse_args()
 
 data = pandas.read_csv(args.data)
-
+data.dropna(inplace=True)
 for allele in data.allele.unique():
     allele_df = data.loc[data['allele'] == allele]
-    
-    auc_score = auc( allele_df[str(0)], allele_df['measurement_value'] )
-    print("%s %.4f" % (allele, auc_score)) 
+    if len(allele_df.measurement_value.unique()) < 2:
+        continue
+    else:
+        auc_score = auc( allele_df[str(0)], allele_df['measurement_value'] )
+        print("%s %.4f" % (allele, auc_score)) 
