@@ -41,7 +41,6 @@ class PeptideEnv(gym.Env):
         anneal_nomod_step: int=0,
         anneal_nomod_rate: float=0.05,
         mod_neg_penalty: float=-0.5,
-        positive_threshold: float=1.0,
         allele_name: str = "class1_pseudosequences.csv",
         discount_penalty: float=0.8,
         terminal: bool = False,
@@ -57,7 +56,6 @@ class PeptideEnv(gym.Env):
         configure_tensorflow(backend='tensorflow-cpu')
         self.predictor = Class1PresentationPredictor.load()
         
-        self.positive_threshold = positive_threshold
         self.allow_imm_rew = allow_imm_rew
         self.rate = rate
         self.terminal = terminal
@@ -451,7 +449,6 @@ if __name__ == '__main__':
     parser.add_argument('--n_steps', type=int, default=512, help="number of roll out steps. Number of time steps in each batch")
     
     parser.add_argument('--threshold', type=float, default=0.05, help="threshold of positive reward")
-    parser.add_argument('--positive_threshold', type=float, default=1.0, help="positive threshold")
     parser.add_argument('--ent_coef', type=float, default=0.1, help="encourage exploration")
     parser.add_argument('--pretrain_iter', type=int, default=3000, help="the iteration for pretraining")
     
@@ -498,8 +495,7 @@ if __name__ == '__main__':
                     "threshold":args.threshold, "rate":args.rate, "reward_type":args.reward_type, \
                     "discount_penalty":args.discount_penalty, "anneal_nomod_step":args.anneal_nomod_step, \
                     "anneal_nomod_rate":args.anneal_nomod_rate, "terminal":args.terminal, "sample_rate":args.sample_rate, \
-                    "stop_criteria":args.stop_criteria, "max_step":args.max_step, "max_len":args.max_len, \
-                    "positive_threshold":args.positive_threshold}
+                    "stop_criteria":args.stop_criteria, "max_step":args.max_step, "max_len":args.max_len}
     
     ftype = {"deep":True, "blosum":True, "onehot": True}
     config = {"ftype":ftype, "embed_dim": 60,
