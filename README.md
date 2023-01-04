@@ -38,8 +38,18 @@ Our DRL framework is based on [stable-baseline3](https://github.com/DLR-RM/stabl
 To train a PepPPO model, run
 
 ```
-python ./code/peptide_env.py --path <model path> --allow_imm_rew 0 --gamma 0.9
+python ./code/peptide_env.py --path <model path> --gamma 0.9 --num_envs 20 --pretrain_iter 3000 --sample_rate 0.5
 ```
+
+<code>path</code>: path used to save the model
+
+<code>gamma</code>: discount factor
+
+<code>sample_rate</code> : the percentage of initial peptides that are sampled from the dataset. For example, "sample_rate = 0.0" represents that all the initial peptides are randomly generated.
+
+<code>num_envs</code> : number of environments running in parallel; determined by the cores of CPU. 
+
+Please check the details of all the parameters using the command <code>python ./code/peptide_env.py -h</code>
 
 
 
@@ -48,10 +58,8 @@ python ./code/peptide_env.py --path <model path> --allow_imm_rew 0 --gamma 0.9
 To test a trained PepPPO model with specific alleles, run
 
 ```
-python ./code/test_RL.py --sample_rate 0.5 --alleles ./data/test_alleles.txt --out <test result file> --rollout 1000 --path ./model/ppo_peptide.zip
+python ./code/test_RL.py --sample_rate 0.5 --alleles ./data/test_alleles.txt --out <test result file> --num_envs 5 --rollout 1000 --path ./model/ppo_peptide.zip
 ```
-
-<code>sample_rate</code> : the percentage of initial peptides that are sampled from the dataset. For example, "sample_rate = 0.0" represents that all the initial peptides are randomly generated.
 
 <code>alleles</code> : the path of the file with all the alleles to be tested.
 
@@ -66,7 +74,7 @@ python ./code/test_RL.py --sample_rate 0.5 --alleles ./data/test_alleles.txt --o
 To optimize specific peptides for given alleles with the trained PepPPO model , run
 
 ```
-python ./code/test_RL.py --sample_rate 0.5 --peptides <test peptide path> --alleles ./data/test_alleles.txt --out <test result file> --rollout 1000 --path ./model/ppo_peptide.zip
+python ./code/test_RL_with_peptide.py --sample_rate 0.5 --peptides <test peptide path> --alleles ./data/test_alleles.txt --out <test result file> --rollout 1000 --path ./model/ppo_peptide.zip
 ```
 
 <code>peptides</code> : the path of the file with all the alleles to be tested.
